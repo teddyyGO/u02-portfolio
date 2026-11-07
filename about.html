@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="About teddyyGO, work experience and education.">
+  <title>About | teddyyGO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Poppins:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/about.css">
+  <script src="js/menu.js" defer></script>
+  <script src="js/cv.js" defer></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo gradient-text" aria-label="teddyyGO, home">
+        <span class="logo-top">{TG}</span>
+        <span class="logo-bottom">teddyygo</span>
+      </a>
+
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="menu">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span class="visually-hidden">Menu</span>
+      </button>
+
+      <div class="menu" id="menu">
+        <nav aria-label="Main">
+          <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" aria-current="page">About</a></li>
+            <li><a href="tech-stack.html">Tech Stack</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <ul class="social-list">
+          <li><a href="https://github.com/teddyyGO"><img src="img/icons/github.svg" alt="GitHub" width="30" height="30"></a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container about">
+      <h1>About Me</h1>
+      <p class="about-text">I am a frontend developer who likes to build clean and accessible websites. I enjoy turning designs into real pages that work for everyone.</p>
+      <p id="cv-status" role="status">Loading CV...</p>
+
+      <section aria-labelledby="work-title">
+        <h2 id="work-title">Work Experience</h2>
+        <ol class="timeline" id="work-list"></ol>
+      </section>
+
+      <section aria-labelledby="education-title">
+        <h2 id="education-title">Education</h2>
+        <ol class="timeline" id="education-list"></ol>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Designed and built by teddyyGO with <span class="gradient-text">Love</span> &amp; <span class="gradient-text">Coffee</span></p>
+    </div>
+  </footer>
+</body>
+</html>

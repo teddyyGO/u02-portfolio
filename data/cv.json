@@ -1,0 +1,12 @@
+{
+  "work": [
+    { "title": "Job title 3", "type": "Full Time", "place": "Company name", "city": "City", "start": "2024-01", "end": null },
+    { "title": "Job title 2", "type": "Part Time", "place": "Company name", "city": "City", "start": "2022-01", "end": "2023-12" },
+    { "title": "Job title 1", "type": "Internship", "place": "Company name", "city": "City", "start": "2021-01", "end": "2021-12" }
+  ],
+  "education": [
+    { "title": "Education 3", "type": "Full Time", "place": "School name", "city": "City", "start": "2025-08", "end": null },
+    { "title": "Education 2", "type": "Part Time", "place": "School name", "city": "City", "start": "2022-08", "end": "2023-06" },
+    { "title": "Education 1", "type": "Full Time", "place": "School name", "city": "City", "start": "2019-08", "end": "2022-06" }
+  ]
+}
