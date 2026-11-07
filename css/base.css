@@ -4,11 +4,11 @@
   --color-heading-dark: #1e0e62;
   --color-text: #666666;
   --color-muted: #6b6b6b;
-  --color-black: #000000;
   --color-line: #ebeaed;
   --color-badge-bg: #d7ffe0;
   --color-badge-text: #01750d;
   --color-focus: #482be7;
+  --color-card-bg: #ffffff;
   --color-status-bg: #f3f2f7;
   --color-text-strong: #2b2b2b;
   --color-error: #b3261e;
@@ -16,6 +16,29 @@
 
   --font-main: "Poppins", sans-serif;
   --font-nav: "DM Sans", sans-serif;
+}
+
+html.dark {
+  color-scheme: dark;
+  --color-bg: #191919;
+  --color-heading: #d9d9d9;
+  --color-heading-dark: #ffffff;
+  --color-text: #b3b3b3;
+  --color-muted: #a7a7a7;
+  --color-line: #333333;
+  --color-focus: #a99bff;
+  --color-card-bg: #262626;
+  --color-status-bg: #262626;
+  --color-text-strong: #f2f2f2;
+  --color-error: #ff8a80;
+  --gradient: linear-gradient(90deg, #13b0f5, #f03fbf);
+}
+
+.dark img[src$="github.svg"],
+.dark img[src$="building.svg"],
+.dark img[src$="location.svg"],
+.dark .social-list a:hover img {
+  filter: invert(1);
 }
 
 *,
@@ -84,7 +107,7 @@ button:focus-visible {
   left: 16px;
   top: -60px;
   background: var(--color-heading-dark);
-  color: #ffffff;
+  color: var(--color-bg);
   padding: 8px 16px;
   z-index: 10;
 }
@@ -143,7 +166,7 @@ button:focus-visible {
   width: 32px;
   height: 4px;
   margin: 6px 0;
-  background-color: var(--color-black);
+  background-color: var(--color-text-strong);
   border-radius: 2px;
 }
 
@@ -201,6 +224,24 @@ button:focus-visible {
   filter: none;
 }
 
+.theme-button {
+  margin-left: auto;
+  margin-right: 12px;
+  padding: 6px 14px;
+  font-family: var(--font-nav);
+  font-size: 16px;
+  border: 2px solid var(--color-text-strong);
+  border-radius: 100px;
+  background-color: transparent;
+  color: var(--color-text-strong);
+  cursor: pointer;
+}
+
+.theme-button[aria-pressed="true"] {
+  background-color: var(--color-text-strong);
+  color: var(--color-bg);
+}
+
 /* footer */
 
 .site-footer {
@@ -216,6 +257,11 @@ button:focus-visible {
 @media (min-width: 900px) {
   .menu-button {
     display: none;
+  }
+
+  .theme-button {
+    order: 1;
+    margin: 0 0 0 30px;
   }
 
   .js .menu,
