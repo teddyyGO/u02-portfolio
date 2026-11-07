@@ -9,6 +9,9 @@
   --color-badge-bg: #d7ffe0;
   --color-badge-text: #01750d;
   --color-focus: #482be7;
+  --color-status-bg: #f3f2f7;
+  --color-text-strong: #2b2b2b;
+  --color-error: #b3261e;
   --gradient: linear-gradient(90deg, #0870ab, #b0219d);
 
   --font-main: "Poppins", sans-serif;
@@ -248,4 +251,18 @@ button:focus-visible {
   .nav-list {
     gap: 60px;
   }
+}
+
+/* loading, error and empty messages */
+
+.status {
+  margin: 40px 0 0;
+  padding: 16px 20px;
+  border-left: 4px solid var(--color-focus);
+  background-color: var(--color-status-bg);
+  color: var(--color-text-strong);
+}
+
+.status.error {
+  border-left-color: var(--color-error);
 }

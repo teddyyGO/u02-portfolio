@@ -44,6 +44,7 @@ async function loadCv() {
     cvStatus.hidden = true;
   } catch (error) {
     cvStatus.textContent = "The CV could not be loaded. Please try again later.";
+    cvStatus.classList.add("error");
   }
 }
 
