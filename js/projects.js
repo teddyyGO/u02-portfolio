@@ -1,6 +1,8 @@
 const githubUser = "teddyyGO";
 const projectStatus = document.querySelector("#project-status");
 const projectList = document.querySelector("#project-list");
+const filters = document.querySelector(".filters");
+const filterButtons = document.querySelectorAll(".filter-button");
 
 let allProjects = [];
 
@@ -68,10 +70,27 @@ async function loadProjects() {
 
     allProjects = repos.filter((repo) => !repo.fork && repo.name !== githubUser);
     showProjects(allProjects);
+    filters.hidden = false;
   } catch (error) {
     projectStatus.innerHTML = `Could not load projects from GitHub right now. Try again later or visit <a href="https://github.com/${githubUser}">my GitHub profile</a>.`;
     projectStatus.classList.add("error");
   }
+}
+
+for (const button of filterButtons) {
+  button.addEventListener("click", function () {
+    for (const otherButton of filterButtons) {
+      otherButton.setAttribute("aria-pressed", "false");
+    }
+    button.setAttribute("aria-pressed", "true");
+
+    const language = button.dataset.language;
+    if (language === "All") {
+      showProjects(allProjects);
+    } else {
+      showProjects(allProjects.filter((repo) => repo.language === language));
+    }
+  });
 }
 
 loadProjects();

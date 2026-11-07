@@ -51,6 +51,11 @@
     <div class="container projects">
       <h1>Projects</h1>
       <p class="projects-subtitle">My public repositories on GitHub</p>
+      <div class="filters" role="group" aria-label="Filter projects by language" hidden>
+        <button class="filter-button" type="button" data-language="All" aria-pressed="true">All</button>
+        <button class="filter-button" type="button" data-language="JavaScript" aria-pressed="false">JavaScript</button>
+        <button class="filter-button" type="button" data-language="TypeScript" aria-pressed="false">TypeScript</button>
+      </div>
       <p id="project-status" class="status" role="status">Loading projects from GitHub...</p>
       <ul class="project-list" id="project-list"></ul>
     </div>

@@ -113,3 +113,30 @@
     font-size: 28px;
   }
 }
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.filter-button {
+  font-family: var(--font-nav);
+  font-size: 16px;
+  padding: 8px 20px;
+  border: 2px solid var(--color-heading);
+  border-radius: 100px;
+  background-color: transparent;
+  color: var(--color-heading);
+  cursor: pointer;
+}
+
+.filter-button:hover {
+  background-color: var(--color-status-bg);
+}
+
+.filter-button[aria-pressed="true"] {
+  background-color: var(--color-heading);
+  color: var(--color-bg);
+}
