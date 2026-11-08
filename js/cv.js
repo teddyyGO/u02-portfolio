@@ -37,6 +37,9 @@ function showEntries(list, entries) {
 async function loadCv() {
   try {
     const response = await fetch("data/cv.json");
+    if (!response.ok) {
+      throw new Error("Could not load cv.json");
+    }
     const cv = await response.json();
 
     showEntries(workList, cv.work);
@@ -45,6 +48,7 @@ async function loadCv() {
   } catch (error) {
     cvStatus.textContent = "The CV could not be loaded. Please try again later.";
     cvStatus.classList.add("error");
+    cvStatus.hidden = false;
   }
 }
 
