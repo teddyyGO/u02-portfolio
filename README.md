@@ -48,7 +48,7 @@ Från början står det "Loading projects from GitHub..." i ett element med `rol
 
 Styrkor: alla tre datalägen syns på sidan, filtret och temat använder samma mönster med `aria-pressed`, och koden har engelska namn genomgående.
 
-Svagheter: headern finns fortfarande kopierad i fem HTML-filer, så temaknappen fick läggas in fem gånger. `cv.js` kollar inte `response.ok` på samma sätt som `projects.js`. Menyn på mobil går inte att stänga med Escape.
+Svagheter: headern finns fortfarande kopierad i fem HTML-filer, så temaknappen fick läggas in fem gånger. `cv.js` och `projects.js` hanterar fel nästan likadant, men koden finns på två ställen. Först kollade `cv.js` inte `response.ok`, och menyn på mobil gick inte att stänga med Escape. Det är fixat nu.
 
 **Det här skulle jag bygga om**
 
