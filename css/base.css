@@ -260,15 +260,14 @@ button:focus-visible {
   }
 
   .theme-button {
-    order: 1;
-    margin: 0 0 0 30px;
+    margin-right: 20px;
   }
 
   .js .menu,
   .menu {
     display: flex;
     align-items: center;
-    gap: 50px;
+    gap: 30px;
     width: auto;
     padding-top: 0;
   }
@@ -294,6 +293,15 @@ button:focus-visible {
 }
 
 @media (min-width: 1200px) {
+  .js .menu,
+  .menu {
+    gap: 50px;
+  }
+
+  .theme-button {
+    margin-right: 30px;
+  }
+
   .nav-list {
     gap: 60px;
   }

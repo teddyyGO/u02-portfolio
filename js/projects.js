@@ -74,6 +74,7 @@ async function loadProjects() {
   } catch (error) {
     projectStatus.innerHTML = `Could not load projects from GitHub right now. Try again later or visit <a href="https://github.com/${githubUser}">my GitHub profile</a>.`;
     projectStatus.classList.add("error");
+    projectStatus.hidden = false;
   }
 }
 

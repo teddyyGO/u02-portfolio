@@ -11,14 +11,9 @@
   letter-spacing: -0.5px;
 }
 
-.contact-list {
-  list-style: none;
-  margin: 24px 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
+.contact-text {
+  font-size: 18px;
+  margin: 24px 0 16px;
 }
 
 .contact-link {
@@ -33,10 +28,6 @@
 .contact-link:hover {
   text-decoration: underline;
   text-decoration-color: var(--color-focus);
-}
-
-.contact-or {
-  font-size: 18px;
 }
 
 @media (min-width: 900px) {
