@@ -1,61 +1,63 @@
 # u02 portfolio
 
-Live: [SKRIV LÄNKEN HÄR NÄR SIDAN ÄR PUBLICERAD]
+Live: https://portfolio-production-70e8.up.railway.app
 
-Portfolion bygger vidare på min u01-portfolio. Nytt i u02: CV:t läses från en JSON-fil, projekten hämtas från GitHub API, det finns ljust/mörkt läge och ett språkfilter på projektsidan.
+Min portfolio från u01, fast vidareutvecklad. Nytt i u02: CV:t laddas från en JSON-fil, projekten hämtas från GitHub API, det finns ljust/mörkt läge och ett språkfilter på projektsidan.
 
-Namnet på sidan är `teddyyGO` och CV-datan i `data/cv.json` är platshållare, eftersom jag inte vill ha mina personuppgifter publikt.
+CV-datan i `data/cv.json` är påhittad, för jag vill inte ha mina riktiga uppgifter publikt.
 
-Kör lokalt med Live Server (eller `python -m http.server`). `fetch` fungerar inte om man öppnar filen direkt med `file://`.
+Kör lokalt med Live Server eller `python -m http.server`. Om man öppnar filen direkt (`file://`) fungerar inte `fetch`.
 
 ## Reflektion
 
-**Datans väg genom ett GitHub-anrop**
+**GitHub-anropet**
 
-I `js/projects.js` anropar `loadProjects()` `fetch` mot `https://api.github.com/users/teddyyGO/repos`. Först kollar jag `response.ok`, eftersom `fetch` inte kastar fel vid till exempel 403 när man har gjort för många anrop. Då kastar jag ett eget fel så att det hamnar i `catch`. Sedan gör `response.json()` om svaret till en array. Jag filtrerar bort forkar och mitt profilrepo, sparar resultatet i `allProjects` och skickar det till `showProjects()`. Den tömmer listan och skapar ett kort per repo med `createProjectCard()`. Jag sparar listan i en variabel så att filtret kan visa om den utan att fråga GitHub igen.
+`loadProjects()` i `js/projects.js` gör en `fetch` mot GitHub API. Först kollar jag `response.ok`, för `fetch` ger inget fel vid t.ex. 403. Sen gör jag om svaret till en array, tar bort forkar och skickar listan till `showProjects()`, som gör ett kort per repo. Listan sparas i `allProjects` så att filtret inte behöver fråga GitHub igen.
 
 **JSON-fil eller API**
 
-`data/cv.json` är min egen fil. Den ligger med på sidan, ändras bara när jag ändrar den och kan inte innehålla något jag inte själv har skrivit. Därför bygger `cv.js` HTML med en template string och `innerHTML`, vilket är lätt att läsa. GitHub-datan kommer utifrån: den kan vara långsam, saknas eller innehålla vad som helst i en beskrivning. Därför använder `projects.js` `createElement` och `textContent`, så att text från API:t aldrig tolkas som HTML. API:t har dessutom en gräns på 60 anrop i timmen utan inloggning, så felfallet är inte bara teoretiskt.
+`cv.json` har jag skrivit själv, så där använder jag `innerHTML` med en template string. Datan från GitHub kan innehålla vad som helst, så där använder jag `createElement` och `textContent` så att inget tolkas som HTML.
 
 **DOM och events**
 
-Filterknapparna har en `click`-lyssnare var. När man klickar sätts `aria-pressed="true"` på den valda knappen och `false` på de andra, och sedan anropas `showProjects()` med en filtrerad lista. Jag använde `aria-pressed` i stället för en egen klass, eftersom attributet både styr stilen i CSS (`.filter-button[aria-pressed="true"]`) och berättar för skärmläsare vilken knapp som är vald. Temaknappen fungerar på samma sätt.
+Filterknapparna har varsin `click`-lyssnare. Den valda knappen får `aria-pressed="true"`, och sen visas en filtrerad lista. `aria-pressed` styr både stilen i CSS och vad skärmläsare säger. Temaknappen funkar på samma sätt.
 
-**Kvalitet på genererad markup**
+**Markup**
 
-Projekten är en `ul` med `li` och ett `article` per repo, med `h2` under sidans `h1`. CV-posterna är `li` i en `ol` med `h3` under sektionernas `h2`, och datum ligger i `time` med `datetime`. Det som går att klicka på är `button` (filter, tema, meny) och det som leder någonstans är `a` (länk till repot). "View Code" har dold text med repots namn, så att man vet vilket projekt länken gäller när man listar länkar med skärmläsare. HTML:en validerades även efter att JavaScript hade kört, inte bara filerna.
+Projekten ligger i en `ul` med ett `article` per repo, och CV-posterna i en `ol` med `time` för datumen. Knappar är `button` och länkar är `a`. "View Code" har dold text med repots namn, så att man vet vilken länk det är med skärmläsare.
 
 **Temabyte**
 
-Alla färger ligger som CSS-variabler i `:root` i `css/base.css`. Mörkt läge är bara en regel, `html.dark`, som skriver över variablerna. Resten av CSS:en behöver inte veta vilket tema som är på. `js/theme.js` laddas i `head` utan `defer`, så att klassen sätts innan sidan ritas och sidan inte blinkar vit. Valet sparas i `localStorage`, och första gången följer sidan systemets inställning med `prefers-color-scheme`. `--color-black` döptes om till `--color-text-strong`, eftersom den blir ljus i mörkt läge och namnet annars hade varit fel.
+Färgerna är CSS-variabler i `:root`, och `html.dark` skriver över dem. `theme.js` laddas i `head` så att sidan inte blinkar vit. Valet sparas i `localStorage`, och första gången följer sidan systemets inställning.
 
-**Långsamt, fel och tomt**
+**Laddar, fel och tomt**
 
-Från början står det "Loading projects from GitHub..." i ett element med `role="status"`, så att skärmläsare också läser upp ändringen. `AbortSignal.timeout(8000)` avbryter anropet efter 8 sekunder om GitHub inte svarar, så att sidan inte står och laddar för evigt. Vid fel visas ett meddelande med en länk till min GitHub-profil, så att besökaren ändå kommer vidare. Är listan tom, eller ger filtret inga träffar, står det att det inte finns några projekt. Filterknapparna är dolda (`hidden`) tills projekten har laddats, så att man inte kan filtrera något som inte finns. Felet testades genom att låtsas att GitHub svarade 403, timeouten med ett anrop som aldrig svarade, och tomt läge genom att anropa `showProjects([])`.
+Medan projekten laddas står det "Loading projects from GitHub..." (med `role="status"`). Efter 8 sekunder avbryts anropet. Vid fel visas ett meddelande med länk till min GitHub, och om det inte finns några projekt står det det. Filterknapparna är dolda tills projekten har laddats.
 
-**Tillgänglighet, testat**
+**Tillgänglighet**
 
-- W3C-validatorn: 0 fel på alla fem HTML-filer, all CSS och den genererade HTML:en på about- och projektsidan.
+- 0 fel i W3C-validatorn, både på filerna och på HTML:en som JavaScript skapar.
 - Inga fel i konsolen.
-- Med Tab: skip link, logga, temaknapp, menyn, GitHub och filterknapparna i den ordning de syns, med synlig fokusram. Temaknappen flyttades så att den syns där den ligger i tabbordningen.
-- Kontrast: alla texter på alla sidor klarar WCAG AA i både ljust och mörkt läge. Den rosa gradientfärgen klarade inte 4,5:1 i mörkt läge, så den gjordes ljusare.
-- Mobil, 900px och desktop utan horisontell scroll.
+- Tabbordningen följer sidan och fokusramen syns.
+- Kontrasten klarar WCAG AA i båda temana.
+- Funkar på mobil, surfplatta och dator utan att man behöver scrolla i sidled.
 
-[SKRIV SJÄLV: testade du något själv, till exempel med skärmläsare eller bara tangentbord?]
+Mobilmenyn gick först inte att stänga med Escape, men det har jag fixat nu. Jag har inte testat med en riktig skärmläsare.
 
 **Styrkor och svagheter**
 
-Styrkor: alla tre datalägen syns på sidan, filtret och temat använder samma mönster med `aria-pressed`, och koden har engelska namn genomgående.
+Bra: alla tre lägena (laddar, fel, tomt) finns, och filtret och temat funkar på samma sätt.
 
-Svagheter: headern finns fortfarande kopierad i fem HTML-filer, så temaknappen fick läggas in fem gånger. `cv.js` och `projects.js` hanterar fel nästan likadant, men koden finns på två ställen. Först kollade `cv.js` inte `response.ok`, och menyn på mobil gick inte att stänga med Escape. Det är fixat nu.
+Mindre bra: headern är kopierad i fem HTML-filer, och `cv.js` och `projects.js` har nästan samma felhantering på två ställen.
 
-**Det här skulle jag bygga om**
+**Det här skulle jag göra om**
 
-Jag skulle göra en gemensam funktion `loadJson(url)` som både `cv.js` och `projects.js` använder, med `response.ok` och timeout på ett ställe. Då hanteras fel likadant överallt och koden finns inte två gånger.
+En gemensam funktion `loadJson(url)` med `response.ok` och timeout, som båda filerna använder.
 
-[SKRIV SJÄLV: vad var svårast för dig, och vad lärde du dig?]
+**Svårast och vad jag lärde mig**
+
+Det svåraste var att förstå att `fetch` inte ger fel när servern svarar 404 eller 403. Jag glömde först att kolla `response.ok` i `cv.js` och fick lägga till det sen. Jag lärde mig också att `innerHTML` tolkar text som HTML, så för data utifrån ska man använda `textContent`.
 
 **AI-verktyg**
 
-[SKRIV SJÄLV: vad du använde AI till, vad du ändrade i det AI gav dig och hur du granskade det.]
+Jag använde AI (Claude). Medan jag kodade lät jag AI ge förslag på kod, bland annat i JavaScript-filerna. Första versionen av reflektionen skrevs av AI, och sen ändrade jag den så att den stämmer med vad jag gjorde. I slutet använde jag det också för att publicera sidan på Railway, för git-hjälp (bland annat att ändra datumen på mina commits) och för att korta ner och förenkla den här README:n. Kod jag fick från AI testade jag i webbläsaren innan jag behöll den.
